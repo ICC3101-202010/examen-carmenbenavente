@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace Examen
 {
@@ -13,6 +13,8 @@ namespace Examen
             #region Crear
             List<Player> players = new List<Player>();
             List<Player> players1 = new List<Player>();
+            List<Player> field = new List<Player>();
+            List<Player> field1 = new List<Player>();
             Player p1 = new Player("A A", 23, "Chile", 5000, 350, 200, 1, false); players.Add(p1);
             Player p2 = new Player("B B", 23, "Chile", 5000, 350, 200, 2, true); players.Add(p2);
             Player p3 = new Player("C C", 23, "Chile", 5000, 350, 200, 3, false); players.Add(p3);
@@ -47,28 +49,54 @@ namespace Examen
             Coach c2 = new Coach("R R", 42, "Irlanda", 10000, 570);
             Doctor d1 = new Doctor("S S", 42, "Chile", 15000, 500);
             Doctor d2 = new Doctor("T T", 42, "Irlanda", 15000, 500);
-            Team chile = new Team(players, c1, d1, true,"Chile");
-            Team irlanda = new Team(players1, c2, d2, true, "Irlanda");
-            Team ligac = new Team(players, c2, d1, false, "Liga Chilena");
-            Team ligai = new Team(players1, c1, d2, false, "Liga Irlandesa");
+            int i = 11;
+            while (i>= 0)
+            {
+                field.Add(players[i]);
+                field1.Add(players1[i]);
+                i--;
+            }
+            Team chile = new Team(players, c1, d1, true,"Chile",field);
+            Team irlanda = new Team(players1, c2, d2, true, "Irlanda",field1);
+            Team ligac = new Team(players, c2, d2, false, "Liga Chilena", field);
+            Team ligai = new Team(players1, c1, d1, false, "Liga Irlandesa", field1);
             #endregion
+
+            d1.Injured += c1.OnInjured;
+            d2.Injured += c2.OnInjured;
+
+            #region Consola
+
             chile.ShowInfo();
+            Thread.Sleep(3000);
             Console.WriteLine();
             irlanda.ShowInfo();
+            Thread.Sleep(3000);
             Console.WriteLine();
             Partido(chile, irlanda);
+            Thread.Sleep(3000);
+            Console.WriteLine();
+            Partido(ligac, ligai);
+            Thread.Sleep(3000);
             Console.WriteLine();
             Partido(chile, ligac);
+            Thread.Sleep(3000);
             Console.WriteLine();
             Console.WriteLine("Se intenta de agregar un jugador a un equipo nacional.");
+            Thread.Sleep(3000);
             chile.AddPlayer(p16);
+            Thread.Sleep(3000);
             Console.WriteLine();
             ligai.ShowInfo();
+            Thread.Sleep(3000);
             Console.WriteLine();
             Console.WriteLine("Se intenta de agregar un jugador a un equipo de liga.");
+            Thread.Sleep(3000);
             ligac.AddPlayer(p23);
             ligac.ShowInfo();
             Console.ReadKey();
+
+            #endregion
         }
         static public void Partido(Team a, Team b)
         {
@@ -77,7 +105,7 @@ namespace Examen
                 Console.WriteLine("Se jugó un partido, los equipos que se enfrentaron son:");
                 Console.WriteLine(a.Name + " v/s " + b.Name);
                 Random rnd = new Random();
-                int minutos = rnd.Next(90, 130);
+                int minutos = rnd.Next(90, 100);
                 Console.WriteLine("El partido duró {0} minutos", minutos.ToString());
                 int marcadorA = rnd.Next(5);
                 int marcadorB = rnd.Next(5);
@@ -92,6 +120,19 @@ namespace Examen
                     str = "Liga";
                 }
                 Console.WriteLine("El tipo de partido es {0}", str);
+                int lesion = rnd.Next(3);
+                if (lesion == 0)
+                {
+                    int i = rnd.Next(12);
+                    Console.WriteLine("El jugador {0} de {1} se lesionó", a.FieldPlayers[i].Name, a.Name);
+                    a.TeamDoctor.EvaluatePlayer(a.FieldPlayers[i]);
+                }
+                else if (lesion == 1)
+                {
+                    int i = rnd.Next(12);
+                    Console.WriteLine("El jugador {0} de {1} se lesionó", b.FieldPlayers[i].Name, b.Name);
+                    b.TeamDoctor.EvaluatePlayer(b.FieldPlayers[i]);
+                }
             }
             else
             {

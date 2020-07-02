@@ -17,9 +17,13 @@ namespace Examen
 
         public int TacticPoints { get => tacticPoints; set => tacticPoints = value; }
 
-        public void ChangePlayer()
+        public void ChangePlayer(Player p)
         {
-            // Not Implemented Yet
+            Console.WriteLine("Se cambió al jugador " + p.Name);
+        }
+        public void OnInjured(object source, PlayerEventArgs args)
+        {
+            ChangePlayer(args.player);
         }
     }
 }

@@ -13,14 +13,16 @@ namespace Examen
         private Doctor teamDoctor;
         private bool type; // true es Nacional y false es Liga
         private string name;
+        private List<Player> fieldPlayers;
 
-        public Team(List<Player> teamPlayers, Coach teamCoach, Doctor teamDoctor, bool type, string name)
+        public Team(List<Player> teamPlayers, Coach teamCoach, Doctor teamDoctor, bool type, string name, List<Player> fieldPlayers)
         {
             this.teamPlayers = teamPlayers;
             this.teamCoach = teamCoach;
             this.teamDoctor = teamDoctor;
             this.type = type;
             this.name = name;
+            this.FieldPlayers = fieldPlayers;
         }
 
         public List<Player> TeamPlayers { get => teamPlayers; set => teamPlayers = value; }
@@ -28,6 +30,7 @@ namespace Examen
         public Doctor TeamDoctor { get => teamDoctor; set => teamDoctor = value; }
         public bool Type { get => type; set => type = value; }
         public string Name { get => name; set => name = value; }
+        public List<Player> FieldPlayers { get => fieldPlayers; set => fieldPlayers = value; }
 
         public void ShowInfo()
         {
