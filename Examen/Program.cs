@@ -22,7 +22,7 @@ namespace Examen
             Player p7 = new Player("G G", 23, "Chile", 5000, 350, 200, 7, false); players.Add(p7); players1.Add(p7);
             Player p8 = new Player("H H", 23, "Chile", 5000, 350, 200, 8, false); players.Add(p8);
             Player p9 = new Player("I I", 23, "Chile", 5000, 350, 200, 9, false); players.Add(p9);
-            Player p10 = new Player("J J", 23, "Chile", 5000, 350, 200, 10, false); players.Add(p10); players1.Add(p10);
+            Player p10 = new Player("J J", 23, "Irlanda", 5000, 350, 200, 10, false); players.Add(p10); players1.Add(p10);
             Player p11 = new Player("K K", 23, "Chile", 5000, 350, 200, 11, false); players.Add(p11);
             Player p12 = new Player("L L", 23, "Chile", 5000, 350, 200, 12, false); players.Add(p12);
             Player p13 = new Player("M M", 23, "Chile", 5000, 350, 200, 13, false); players1.Add(p13);
@@ -33,15 +33,57 @@ namespace Examen
             Coach c2 = new Coach("R R", 42, "Irlanda", 10000, 570);
             Doctor d1 = new Doctor("S S", 42, "Chile", 15000, 500);
             Doctor d2 = new Doctor("T T", 42, "Irlanda", 15000, 500);
-            Team chile = new Team(players, c1, d1, true);
-            Team liga = new Team(players1, c2, d2, false);
+            Team chile = new Team(players, c1, d1, true,"Chile");
+            Team chile2 = new Team(players, c2, d1, true, "Chile2");
+            Team liga = new Team(players1, c2, d2, false, "Liga");
             #endregion
-            //chile.VerifyPlayers();
-            //chile.AddPlayer(p16);
-            //liga.VerifyPlayers();
-            //liga.AddPlayer(p3);
-            //liga.VerifyPlayers();
+            chile.ShowInfo();
+            Console.WriteLine();
+            chile2.ShowInfo();
+            Console.WriteLine();
+            Partido(chile, chile2);
+            Console.WriteLine();
+            Partido(chile, liga);
+            Console.WriteLine();
+            Console.WriteLine("Se intenta de agregar un jugador a un equipo nacional.");
+            chile.AddPlayer(p16);
+            Console.WriteLine();
+            liga.ShowInfo();
+            Console.WriteLine();
+            Console.WriteLine("Se intenta de agregar un jugador a un equipo de liga.");
+            liga.AddPlayer(p3);
+            liga.ShowInfo();
             Console.ReadKey();
+        }
+        static public void Partido(Team a, Team b)
+        {
+            if (a.Type == b.Type)
+            {
+                Console.WriteLine("Se jugó un partido, los equipos que se enfrentaron son:");
+                Console.WriteLine(a.Name + " v/s " + b.Name);
+                Random rnd = new Random();
+                int minutos = rnd.Next(90, 130);
+                Console.WriteLine("El partido duró {0} minutos", minutos.ToString());
+                int marcadorA = rnd.Next(5);
+                int marcadorB = rnd.Next(5);
+                Console.WriteLine("El marcador finalizó: " + a.Name + ":" + marcadorA.ToString() +" - "+ b.Name + ":" + marcadorB.ToString());
+                string str;
+                if (a.Type)
+                {
+                    str = "Nacional";
+                }
+                else
+                {
+                    str = "Liga";
+                }
+                Console.WriteLine("El tipo de partido es {0}", str);
+            }
+            else
+            {
+                Console.WriteLine("No se pueden jugar el partido:");
+                Console.WriteLine(a.Name + " v/s " + b.Name);
+                Console.WriteLine("Ambos equipos no son del mismo tipo (Liga o Nacional)");
+            }
         }
     }
 }

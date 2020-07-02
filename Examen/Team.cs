@@ -12,26 +12,47 @@ namespace Examen
         private Coach teamCoach;
         private Doctor teamDoctor;
         private bool type; // true es Nacional y false es Liga
+        private string name;
 
-        public Team(List<Player> teamPlayers, Coach teamCoach, Doctor teamDoctor, bool type)
+        public Team(List<Player> teamPlayers, Coach teamCoach, Doctor teamDoctor, bool type, string name)
         {
             this.teamPlayers = teamPlayers;
             this.teamCoach = teamCoach;
             this.teamDoctor = teamDoctor;
             this.type = type;
+            this.name = name;
         }
 
         public List<Player> TeamPlayers { get => teamPlayers; set => teamPlayers = value; }
         public Coach TeamCoach { get => teamCoach; set => teamCoach = value; }
         public Doctor TeamDoctor { get => teamDoctor; set => teamDoctor = value; }
         public bool Type { get => type; set => type = value; }
+        public string Name { get => name; set => name = value; }
 
-        public void VerifyPlayers()
+        public void ShowInfo()
         {
+            Console.WriteLine(this.name);
+            if (this.type)
+            {
+                Console.WriteLine("Este equipo es Nacional");
+            }
+            else
+            {
+                Console.WriteLine("Este equipo es de Liga");
+            }
             string n = this.teamPlayers[0].Nationality;
+            Console.WriteLine("Sus jugadores son:");
             foreach (Player pl in this.teamPlayers)
             {
-                Console.WriteLine(pl.ShowInfo());
+                if (pl.Goalkeeper)
+                {
+                    Console.WriteLine(pl.ShowInfo() + " Su número es el " + pl.Number.ToString() + "." +" Es arquero en el equipo.");
+                }
+                else
+                {
+                    Console.WriteLine(pl.ShowInfo() + " Su número es el " + pl.Number.ToString() + ".");
+                }
+                
                 if (this.type)
                 {
                     if (pl.Nationality != n)
@@ -42,7 +63,10 @@ namespace Examen
                 }
                 
             }
-            Console.WriteLine("Se ha verificado correctamente.");
+            Console.WriteLine("El entrenador es:");
+            Console.WriteLine(this.teamCoach.ShowInfo());
+            Console.WriteLine("El médico es:");
+            Console.WriteLine(this.teamDoctor.ShowInfo());
         }
     
         public void AddPlayer(Player p)

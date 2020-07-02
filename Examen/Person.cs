@@ -28,7 +28,7 @@ namespace Examen
 
         public string ShowInfo()
         {
-            string s = this.name + " tiene "+ this.age.ToString()+ " años, es de  "+this.nationality+" y tiene un sueldo de "+ this.salary.ToString();
+            string s = this.name + " tiene "+ this.age.ToString()+ " años, es de  "+this.nationality+" y tiene un sueldo de "+ this.salary.ToString() +".";
             return s;
 
         }
